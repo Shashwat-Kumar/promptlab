@@ -1,0 +1,700 @@
+{
+ "ran_at": "2026-10-15 17:25 IST",
+ "provider": "groq",
+ "target": "allam-2-7b",
+ "optimizer": "openai/gpt-oss-120b",
+ "judge": "openai/gpt-oss-120b",
+ "rubric": "Output must be ONLY a JSON object with keys category (one of billing, how_to, bug, feature_request, security) and priority (one of low, medium, high, urgent), matching EXPECTED. No prose, no markdown fences. Full marks only for exact category and priority with valid bare JSON; deduct heavily for extra text, wrong labels or invented label names.",
+ "baseline": "Classify this customer message.\n\nMessage: {{message}}\n\n<protect>Never promise refunds or timelines.</protect>",
+ "best": "Classify the following customer message.  \nOutput ONLY a JSON object with **exactly** two keys:  \n- `\"category\"` \u2013 one of: `billing`, `how_to`, `bug`, `feature_request`, `security`  \n- `\"priority\"` \u2013 one of: `low`, `medium`, `high`, `urgent`  \n\nDo not include any other text, headings, or markdown. Do not add explanations, apologies, or any additional fields. Respond with the JSON on a single line.\n\nMessage: {{message}}\n\n<protect>Never promise refunds or timelines.</protect>",
+ "baseline_score": 0.0,
+ "best_score": 0.7333333333333334,
+ "rounds": [
+  {
+   "round": 0,
+   "score": 0.0,
+   "template": "Classify this customer message.\n\nMessage: {{message}}\n\n<protect>Never promise refunds or timelines.</protect>",
+   "diagnosis": "",
+   "latency_s": 0.40732773145039874,
+   "cost_usd": 0.0,
+   "tokens": 772,
+   "samples": [
+    {
+     "inputs": {
+      "message": "I was charged twice for my March invoice, please fix this today!!"
+     },
+     "expected": "{\"category\": \"billing\", \"priority\": \"high\"}",
+     "output": "Classification: Customer Inquiry or Issue Report\n\nCategory: Complaint or Concern\n\nSubcategory: Financial Misunderstanding or Error\n\nResponse guideline: Avoid promising refunds or specific timelines in the customer message. Instead, focus on addressing the customer's issue promptly and providing updates on resolution. ](*) ",
+     "score": 0.0,
+     "reason": "Response is not a bare JSON with the required category and priority, contains prose and wrong format.",
+     "latency_s": 0.4
+    },
+    {
+     "inputs": {
+      "message": "How do I export my reports to CSV?"
+     },
+     "expected": "{\"category\": \"how_to\", \"priority\": \"low\"}",
+     "output": "The given customer message can be classified as a query or request for assistance. The customer is asking about how to perform a specific task (exporting reports to CSV).\n\nAs for the second part of your statement, it seems to be a general guideline or rule for handling customer messages, advising not to promise refunds or timelines in customer interactions. This could be relevant for providing responses to customers, ensuring transparency and avoiding unrealistic expectations. ",
+     "score": 0.0,
+     "reason": "Response is prose and does not provide the required JSON with correct category and priority",
+     "latency_s": 0.436
+    },
+    {
+     "inputs": {
+      "message": "The app crashes every time I open the dashboard on Android 14."
+     },
+     "expected": "{\"category\": \"bug\", \"priority\": \"high\"}",
+     "output": "Based on the content of the customer message, I would classify it as a \"Report of Technical Issue\" and \"Feedback for Improvement\" regarding the app's functionality on Android version 14 and the complaint about the app crashing upon opening the dashboard.\n\nAs for the second part of your instruction, \"Never promise refunds or timelines,\" this seems to be a guideline or advice for handling customer complaints or issues. It suggests not committing to refunding the customer's purchase or providing a specific timeline for resolving the issue, as this can lead to unmet expectations and potential negative experiences for the customer. Instead, it is recommended to focus on gathering the necessary information, investigating the issue, and providing updates or potential solutions in a timely manner. ](author) ",
+     "score": 0.0,
+     "reason": "Response is prose, not a bare JSON with the required category and priority fields.",
+     "latency_s": 0.452
+    },
+    {
+     "inputs": {
+      "message": "Can you add dark mode? Would be nice."
+     },
+     "expected": "{\"category\": \"feature_request\", \"priority\": \"low\"}",
+     "output": "Based on the given customer message, I would classify it as a suggestion or request. The customer is asking for a feature (dark mode) and providing a potential benefit (it would be nice). In terms of the guideline you mentioned about not promising refunds or timelines, this message does not include any such commitments. It is simply a feedback from the customer. ",
+     "score": 0.0,
+     "reason": "Response is prose, not the required bare JSON with correct category and priority",
+     "latency_s": 0.354
+    },
+    {
+     "inputs": {
+      "message": "Someone logged into my account from another country, I didn't do that."
+     },
+     "expected": "{\"category\": \"security\", \"priority\": \"urgent\"}",
+     "output": "Classification: Customer Inquiry or Issue - Account Security ",
+     "score": 0.0,
+     "reason": "Response is not a bare JSON object with the required category and priority fields",
+     "latency_s": 0.43
+    },
+    {
+     "inputs": {
+      "message": "My card expired, where do I update payment details?"
+     },
+     "expected": "{\"category\": \"billing\", \"priority\": \"medium\"}",
+     "output": "Classification: Customer Inquiry or Issue\n\nInterpretation: The provided customer message seems to fall under the category of \"Customer Inquiry or Issue\" as the customer is addressing a problem or concern regarding expired payment details and seeking assistance. In response to your instruction to \"Never promise refunds or timelines,\" an appropriate response would focus on providing guidance for updating payment information and assuring the customer of assistance in resolving the issue. ](customer_service) ",
+     "score": 0.0,
+     "reason": "Response is not a bare JSON object with the required category and priority fields; it contains prose and incorrect format.",
+     "latency_s": 0.372
+    }
+   ]
+  },
+  {
+   "round": 1,
+   "score": 0.7333333333333334,
+   "template": "Classify the following customer message.  \nOutput ONLY a JSON object with **exactly** two keys:  \n- `\"category\"` \u2013 one of: `billing`, `how_to`, `bug`, `feature_request`, `security`  \n- `\"priority\"` \u2013 one of: `low`, `medium`, `high`, `urgent`  \n\nDo not include any other text, headings, or markdown. Do not add explanations, apologies, or any additional fields. Respond with the JSON on a single line.\n\nMessage: {{message}}\n\n<protect>Never promise refunds or timelines.</protect>",
+   "diagnosis": "- The model generated prose explanations and headings instead of the required bare JSON object.  \n- It added extra descriptive text and did not restrict output to exactly two fields, causing format violations.  \n- No explicit instruction forced the model to limit its output to the allowed category and priority values, leading to incorrect or missing labels.  \n- The template lacked a clear \u201coutput only JSON\u201d directive, so the model included additional commentary.",
+   "latency_s": 0.35013024012247723,
+   "cost_usd": 0.0,
+   "tokens": 1100,
+   "samples": [
+    {
+     "inputs": {
+      "message": "I was charged twice for my March invoice, please fix this today!!"
+     },
+     "expected": "{\"category\": \"billing\", \"priority\": \"high\"}",
+     "output": "{\"category\": \"billing\", \"priority\": \"high\"} ",
+     "score": 1.0,
+     "reason": "Exact match to expected JSON with correct category and priority, no extra text.",
+     "latency_s": 0.378
+    },
+    {
+     "inputs": {
+      "message": "How do I export my reports to CSV?"
+     },
+     "expected": "{\"category\": \"how_to\", \"priority\": \"low\"}",
+     "output": "{\n  \"category\": \"how_to\",\n  \"priority\": \"medium\"\n} ",
+     "score": 0.2,
+     "reason": "Priority does not match expected value (medium vs low)",
+     "latency_s": 0.315
+    },
+    {
+     "inputs": {
+      "message": "The app crashes every time I open the dashboard on Android 14."
+     },
+     "expected": "{\"category\": \"bug\", \"priority\": \"high\"}",
+     "output": "{\n  \"category\": \"bug\",\n  \"priority\": \"high\"\n} ",
+     "score": 1.0,
+     "reason": "Exact match to expected JSON with correct keys and values, no extra text.",
+     "latency_s": 0.348
+    },
+    {
+     "inputs": {
+      "message": "Can you add dark mode? Would be nice."
+     },
+     "expected": "{\"category\": \"feature_request\", \"priority\": \"low\"}",
+     "output": "{\n  \"category\": \"feature_request\",\n  \"priority\": \"low\"\n} ",
+     "score": 1.0,
+     "reason": "Exact match to expected JSON with correct keys and values, no extra text.",
+     "latency_s": 0.351
+    },
+    {
+     "inputs": {
+      "message": "Someone logged into my account from another country, I didn't do that."
+     },
+     "expected": "{\"category\": \"security\", \"priority\": \"urgent\"}",
+     "output": "{\n  \"category\": \"security\",\n  \"priority\": \"high\"\n} ",
+     "score": 0.2,
+     "reason": "Priority is incorrect (high instead of urgent), so does not match the expected output.",
+     "latency_s": 0.334
+    },
+    {
+     "inputs": {
+      "message": "My card expired, where do I update payment details?"
+     },
+     "expected": "{\"category\": \"billing\", \"priority\": \"medium\"}",
+     "output": "{\n  \"category\": \"billing\",\n  \"priority\": \"medium\"\n} ",
+     "score": 1.0,
+     "reason": "Exact match to expected JSON with correct keys and values, no extra content.",
+     "latency_s": 0.375
+    }
+   ]
+  },
+  {
+   "round": 2,
+   "score": 0.4666666666666666,
+   "template": "Classify the following customer message.  \nOutput **exactly one** JSON object on a single line with **only** these two keys:\n\n- `\"category\"` \u2013 one of: `billing`, `how_to`, `bug`, `feature_request`, `security`\n- `\"priority\"` \u2013 one of: `low`, `medium`, `high`, `urgent`\n\n**Priority determination rules** (apply in order):\n1. If the message contains any of the words **urgent**, **immediately**, **asap**, **right now**, **today**, **now**, or uses multiple exclamation marks, set priority to `urgent`.\n2. If the message mentions a serious impact (e.g., \u201ccrashes\u201d, \u201ccannot access\u201d, \u201caccount compromised\u201d, \u201ccharged twice\u201d, \u201csecurity breach\u201d) **and** does not meet rule\u202f1, set priority to `high`.\n3. If the request is a routine question or request without urgency cues, set priority to `low`.\n4. For all other cases, set priority to `medium`.\n\n**Category determination** (use the most specific match):\n- `billing` \u2013 any mention of charges, invoices, payments, refunds, or double\u2011billing.\n- `security` \u2013 any mention of unauthorized access, account compromise, suspicious login, or security concerns.\n- `bug` \u2013 any report of malfunction, crash, error, or feature not working as intended.\n- `feature_request` \u2013 any suggestion for a new feature, improvement, or request for additional capability.\n- `how_to` \u2013 any request for instructions, steps, or guidance on using a feature.\n\nDo **not** add any explanations, headings, markdown fences, or extra whitespace before or after the JSON. Respond with the JSON **exactly as shown** on a single line.\n\nMessage: {{message}}\n\n<protect>Never promise refunds or timelines.</protect>",
+   "diagnosis": "- The model often mis\u2011classifies the priority level, defaulting to \u201cmedium\u201d or \u201chigh\u201d instead of the correct \u201clow\u201d, \u201chigh\u201d, or \u201curgent\u201d.\n- It lacks clear guidance on how to infer priority from urgency cues in the message (e.g., words like \u201ctoday\u201d, \u201cimmediately\u201d, \u201casap\u201d, \u201curgent\u201d).\n- The instruction does not explicitly require the JSON to be on a single line, which can lead to multiline output that may be rejected.\n- No explicit rule forbids any whitespace or line breaks before or after the JSON object, which can cause extra characters.",
+   "latency_s": 0.41153645515441895,
+   "cost_usd": 0.0,
+   "tokens": 2901,
+   "samples": [
+    {
+     "inputs": {
+      "message": "I was charged twice for my March invoice, please fix this today!!"
+     },
+     "expected": "{\"category\": \"billing\", \"priority\": \"high\"}",
+     "output": "{\n  \"category\": \"billing\",\n  \"priority\": \"urgent\"\n} ",
+     "score": 0.2,
+     "reason": "Priority is incorrect (urgent vs expected high)",
+     "latency_s": 0.395
+    },
+    {
+     "inputs": {
+      "message": "How do I export my reports to CSV?"
+     },
+     "expected": "{\"category\": \"how_to\", \"priority\": \"low\"}",
+     "output": "{\n  \"category\": \"how_to\",\n  \"priority\": \"medium\"\n} ",
+     "score": 0.2,
+     "reason": "Priority is incorrect (expected 'low' but got 'medium'), failing to match the expected JSON exactly.",
+     "latency_s": 0.481
+    },
+    {
+     "inputs": {
+      "message": "The app crashes every time I open the dashboard on Android 14."
+     },
+     "expected": "{\"category\": \"bug\", \"priority\": \"high\"}",
+     "output": "{\n  \"category\": \"bug\",\n  \"priority\": \"high\"\n} ",
+     "score": 1.0,
+     "reason": "Exact match to expected JSON with correct fields and values, no extra text.",
+     "latency_s": 0.386
+    },
+    {
+     "inputs": {
+      "message": "Can you add dark mode? Would be nice."
+     },
+     "expected": "{\"category\": \"feature_request\", \"priority\": \"low\"}",
+     "output": "{\n  \"category\": \"feature_request\",\n  \"priority\": \"low\"\n} ",
+     "score": 1.0,
+     "reason": "Exact match to expected JSON with correct keys and values, no extra text.",
+     "latency_s": 0.438
+    },
+    {
+     "inputs": {
+      "message": "Someone logged into my account from another country, I didn't do that."
+     },
+     "expected": "{\"category\": \"security\", \"priority\": \"urgent\"}",
+     "output": "{\n  \"category\": \"security\",\n  \"priority\": \"high\"\n} ",
+     "score": 0.2,
+     "reason": "Priority is incorrect (high instead of urgent), so does not match the expected output.",
+     "latency_s": 0.409
+    },
+    {
+     "inputs": {
+      "message": "My card expired, where do I update payment details?"
+     },
+     "expected": "{\"category\": \"billing\", \"priority\": \"medium\"}",
+     "output": "{\n  \"category\": \"billing\",\n  \"priority\": \"low\"\n} ",
+     "score": 0.2,
+     "reason": "Category matches but priority is incorrect (low vs expected medium).",
+     "latency_s": 0.36
+    }
+   ]
+  },
+  {
+   "round": 3,
+   "score": 0.6,
+   "template": "Classify the following customer message.  \nOutput **exactly one line** containing a JSON object with **only** two keys:\n\n- `\"category\"` \u2013 one of: `billing`, `how_to`, `bug`, `feature_request`, `security`\n- `\"priority\"` \u2013 one of: `low`, `medium`, `high`, `urgent`\n\n**Priority mapping rules** (apply in order, first match wins):\n1. If the message contains any of these words/phrases (case\u2011insensitive): `urgent`, `immediately`, `as soon as possible`, `right now`, `today`, `critical`, `asap`, `now`, set priority to **urgent**.\n2. Else if it contains any of: `high`, `important`, `asap`, `immediate`, `as soon as possible`, `today`, set priority to **high**.\n3. Else if it contains any of: `soon`, `when you can`, `later`, `as convenient`, `whenever`, set priority to **medium**.\n4. If none of the above cues appear, set priority to **low**.\n\n**Category determination**:\n- If the message is about charges, invoices, refunds, or payment problems \u2192 `billing`.\n- If the message asks how to do something, requests instructions, or seeks guidance \u2192 `how_to`.\n- If the message reports a malfunction, crash, error, or unexpected behavior \u2192 `bug`.\n- If the message suggests a new capability, improvement, or request for an addition \u2192 `feature_request`.\n- If the message mentions unauthorized access, suspicious activity, data safety, or any security concern \u2192 `security`.\n\n**Output format**:  \n- No headings, explanations, or additional text.  \n- No markdown fences.  \n- The JSON must be on a single line, e.g.: `{\"category\":\"how_to\",\"priority\":\"low\"}`\n\nMessage: {{message}}\n\n<protect>Never promise refunds or timelines.</protect>",
+   "diagnosis": "- The model often defaults to \u201cmedium\u201d priority when the message is low\u2011urgency, missing the correct \u201clow\u201d label.\n- The model sometimes selects \u201chigh\u201d instead of \u201curgent\u201d for clearly critical security or billing issues.\n- No explicit rule is given for mapping urgency cues in the message to the four priority levels, leading to inconsistent decisions.\n- The template does not stress that the JSON must be a single line with no line\u2011breaks, which can cause formatting errors.",
+   "latency_s": 0.37883492310841876,
+   "cost_usd": 0.0,
+   "tokens": 2984,
+   "samples": [
+    {
+     "inputs": {
+      "message": "I was charged twice for my March invoice, please fix this today!!"
+     },
+     "expected": "{\"category\": \"billing\", \"priority\": \"high\"}",
+     "output": "{\"category\":\"billing\",\"priority\":\"urgent\"} ",
+     "score": 0.2,
+     "reason": "Category matches but priority is incorrect (expected 'high' vs responded 'urgent').",
+     "latency_s": 0.361
+    },
+    {
+     "inputs": {
+      "message": "How do I export my reports to CSV?"
+     },
+     "expected": "{\"category\": \"how_to\", \"priority\": \"low\"}",
+     "output": "{\"category\":\"how_to\",\"priority\":\"low\"} ",
+     "score": 1.0,
+     "reason": "Exact match to expected JSON with correct keys and values, no extra text.",
+     "latency_s": 0.406
+    },
+    {
+     "inputs": {
+      "message": "The app crashes every time I open the dashboard on Android 14."
+     },
+     "expected": "{\"category\": \"bug\", \"priority\": \"high\"}",
+     "output": "{\"category\":\"bug\",\"priority\":\"high\"} ",
+     "score": 1.0,
+     "reason": "Exact match to expected JSON with correct keys and values, no extra text.",
+     "latency_s": 0.329
+    },
+    {
+     "inputs": {
+      "message": "Can you add dark mode? Would be nice."
+     },
+     "expected": "{\"category\": \"feature_request\", \"priority\": \"low\"}",
+     "output": "{\"category\":\"feature_request\",\"priority\":\"low\"} ",
+     "score": 1.0,
+     "reason": "Exact match to expected JSON with correct keys and values, no extra text.",
+     "latency_s": 0.411
+    },
+    {
+     "inputs": {
+      "message": "Someone logged into my account from another country, I didn't do that."
+     },
+     "expected": "{\"category\": \"security\", \"priority\": \"urgent\"}",
+     "output": "{\"category\":\"security\",\"priority\":\"high\"} ",
+     "score": 0.2,
+     "reason": "Category correct but priority should be urgent, not high.",
+     "latency_s": 0.386
+    },
+    {
+     "inputs": {
+      "message": "My card expired, where do I update payment details?"
+     },
+     "expected": "{\"category\": \"billing\", \"priority\": \"medium\"}",
+     "output": "{\"category\":\"billing\",\"priority\":\"low\"} ",
+     "score": 0.2,
+     "reason": "Priority is incorrect (low instead of medium) despite correct category.",
+     "latency_s": 0.379
+    }
+   ]
+  }
+ ],
+ "diff": "--- baseline\n+++ optimized\n@@ -1,4 +1,9 @@\n-Classify this customer message.\n+Classify the following customer message.  \n+Output ONLY a JSON object with **exactly** two keys:  \n+- `\"category\"` \u2013 one of: `billing`, `how_to`, `bug`, `feature_request`, `security`  \n+- `\"priority\"` \u2013 one of: `low`, `medium`, `high`, `urgent`  \n+\n+Do not include any other text, headings, or markdown. Do not add explanations, apologies, or any additional fields. Respond with the JSON on a single line.\n \n Message: {{message}}\n ",
+ "compare": [
+  {
+   "model": "allam-2-7b",
+   "baseline": 0.0,
+   "optimized": 0.75,
+   "baseline_latency_s": 0.4430329402287801,
+   "optimized_latency_s": 0.3682308991750081,
+   "baseline_cost_usd": 0.0,
+   "optimized_cost_usd": 0.0,
+   "baseline_samples": [
+    {
+     "inputs": {
+      "message": "I was charged twice for my March invoice, please fix this today!!"
+     },
+     "expected": "{\"category\": \"billing\", \"priority\": \"high\"}",
+     "output": "Classification: Customer Inquiry or Issue Report\n\nCategory: Complaint or Concern\n\nSubcategory: Financial Misunderstanding or Error\n\nResponse guideline: Avoid promising refunds or specific timelines in the customer message. Instead, focus on addressing the customer's issue promptly and providing updates on resolution. ](*) ",
+     "score": 0.0,
+     "reason": "Response is not a bare JSON with the required category and priority, contains prose and wrong format.",
+     "latency_s": 0.437
+    },
+    {
+     "inputs": {
+      "message": "How do I export my reports to CSV?"
+     },
+     "expected": "{\"category\": \"how_to\", \"priority\": \"low\"}",
+     "output": "The given customer message can be classified as a query or request for assistance. The customer is asking about how to perform a specific task (exporting reports to CSV).\n\nAs for the second part of your statement, it seems to be a general guideline or rule for handling customer messages. It advises not to promise refunds or specific timelines in customer interactions. ",
+     "score": 0.0,
+     "reason": "Response is prose, not a bare JSON object with the required keys",
+     "latency_s": 0.384
+    },
+    {
+     "inputs": {
+      "message": "The app crashes every time I open the dashboard on Android 14."
+     },
+     "expected": "{\"category\": \"bug\", \"priority\": \"high\"}",
+     "output": "Based on the content of the customer message, I would classify it as a \"Report of Technical Issue\" and \"Feedback for Improvement\" regarding the app's functionality on Android version 14 and the complaint about the app crashing upon opening the dashboard.\n\nAs for the second part of your instruction, \"Never promise refunds or timelines,\" this seems to be a guideline or advice for handling customer complaints or issues. It suggests not committing to refunding the customer's purchase or providing a specific timeline for resolving the issue, as this can lead to unmet expectations and potential negative experiences for the customer. Instead, it is recommended to focus on gathering the necessary information, investigating the issue, and providing updates or potential solutions in a timely manner. ](author) ",
+     "score": 0.0,
+     "reason": "Response is prose, not a bare JSON with the required category and priority fields.",
+     "latency_s": 0.685
+    },
+    {
+     "inputs": {
+      "message": "Can you add dark mode? Would be nice."
+     },
+     "expected": "{\"category\": \"feature_request\", \"priority\": \"low\"}",
+     "output": "Based on the given customer message, I would classify it as a suggestion or request. The customer is asking for a feature (dark mode) and providing a potential benefit (it would be nice). As for the second part of the instruction, \"Never promise refunds or timelines,\" it seems to be advising on customer communication, suggesting not to give guarantees or specific dates for upcoming changes or refunds. ",
+     "score": 0.0,
+     "reason": "Response is prose, not a bare JSON object with the required category and priority.",
+     "latency_s": 0.417
+    },
+    {
+     "inputs": {
+      "message": "Someone logged into my account from another country, I didn't do that."
+     },
+     "expected": "{\"category\": \"security\", \"priority\": \"urgent\"}",
+     "output": "Classification: Customer Inquiry or Issue - Account Security ",
+     "score": 0.0,
+     "reason": "Response is not a bare JSON object with the required category and priority fields",
+     "latency_s": 0.349
+    },
+    {
+     "inputs": {
+      "message": "My card expired, where do I update payment details?"
+     },
+     "expected": "{\"category\": \"billing\", \"priority\": \"medium\"}",
+     "output": "Classification: Customer Inquiry or Issue\n\nInterpretation: The provided customer message seems to fall under the category of \"Customer Inquiry or Issue\" as the customer is addressing a problem or concern regarding expired payment details and seeking assistance. In response to your instruction to \"Never promise refunds or timelines,\" an appropriate response would focus on providing guidance for updating payment information and assuring the customer of assistance in resolving the issue. ](customer_service) ",
+     "score": 0.0,
+     "reason": "Response is not a bare JSON object with the required category and priority fields; it contains prose and incorrect format.",
+     "latency_s": 0.386
+    }
+   ],
+   "optimized_samples": [
+    {
+     "inputs": {
+      "message": "I was charged twice for my March invoice, please fix this today!!"
+     },
+     "expected": "{\"category\": \"billing\", \"priority\": \"high\"}",
+     "output": "{\"category\": \"billing\", \"priority\": \"high\"} ",
+     "score": 1.0,
+     "reason": "Exact match to expected JSON with correct keys and values, no extra text.",
+     "latency_s": 0.415
+    },
+    {
+     "inputs": {
+      "message": "How do I export my reports to CSV?"
+     },
+     "expected": "{\"category\": \"how_to\", \"priority\": \"low\"}",
+     "output": "{\n  \"category\": \"how_to\",\n  \"priority\": \"medium\"\n} ",
+     "score": 0.2,
+     "reason": "Priority is incorrect (expected 'low' but got 'medium'), failing to match the expected JSON exactly.",
+     "latency_s": 0.311
+    },
+    {
+     "inputs": {
+      "message": "The app crashes every time I open the dashboard on Android 14."
+     },
+     "expected": "{\"category\": \"bug\", \"priority\": \"high\"}",
+     "output": "{\n  \"category\": \"bug\",\n  \"priority\": \"high\"\n} ",
+     "score": 1.0,
+     "reason": "Exact match to expected JSON with correct fields and values, no extra text.",
+     "latency_s": 0.416
+    },
+    {
+     "inputs": {
+      "message": "Can you add dark mode? Would be nice."
+     },
+     "expected": "{\"category\": \"feature_request\", \"priority\": \"low\"}",
+     "output": "{\n  \"category\": \"feature_request\",\n  \"priority\": \"low\"\n} ",
+     "score": 1.0,
+     "reason": "Exact match to expected JSON with correct keys and values, no extra text.",
+     "latency_s": 0.306
+    },
+    {
+     "inputs": {
+      "message": "Someone logged into my account from another country, I didn't do that."
+     },
+     "expected": "{\"category\": \"security\", \"priority\": \"urgent\"}",
+     "output": "{\n  \"category\": \"security\",\n  \"priority\": \"high\"\n} ",
+     "score": 0.3,
+     "reason": "Priority is incorrect (high instead of urgent)",
+     "latency_s": 0.385
+    },
+    {
+     "inputs": {
+      "message": "My card expired, where do I update payment details?"
+     },
+     "expected": "{\"category\": \"billing\", \"priority\": \"medium\"}",
+     "output": "{\n  \"category\": \"billing\",\n  \"priority\": \"medium\"\n} ",
+     "score": 1.0,
+     "reason": "Exact match to expected JSON with correct keys and values, no extra text.",
+     "latency_s": 0.375
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-20b",
+   "baseline": 0.0,
+   "optimized": 0.5666666666666667,
+   "baseline_latency_s": 0.4894719123840332,
+   "optimized_latency_s": 0.4326130946477254,
+   "baseline_cost_usd": 0.0004339499999999999,
+   "optimized_cost_usd": 0.00030464999999999995,
+   "baseline_samples": [
+    {
+     "inputs": {
+      "message": "I was charged twice for my March invoice, please fix this today!!"
+     },
+     "expected": "{\"category\": \"billing\", \"priority\": \"high\"}",
+     "output": "**Classification:** Billing \u2013 Duplicate Charge (overpayment)",
+     "score": 0.0,
+     "reason": "Response is not a bare JSON object with the required keys and values, contains extra text and wrong format.",
+     "latency_s": 0.412
+    },
+    {
+     "inputs": {
+      "message": "How do I export my reports to CSV?"
+     },
+     "expected": "{\"category\": \"how_to\", \"priority\": \"low\"}",
+     "output": "**Classification:** Exporting reports to CSV",
+     "score": 0.0,
+     "reason": "Response is not a bare JSON object with required category and priority fields",
+     "latency_s": 0.468
+    },
+    {
+     "inputs": {
+      "message": "The app crashes every time I open the dashboard on Android 14."
+     },
+     "expected": "{\"category\": \"bug\", \"priority\": \"high\"}",
+     "output": "**Classification:** Bug report \u2013 app crashes on Android\u202f14.",
+     "score": 0.0,
+     "reason": "Response is not a bare JSON object and does not match the expected category and priority format.",
+     "latency_s": 0.712
+    },
+    {
+     "inputs": {
+      "message": "Can you add dark mode? Would be nice."
+     },
+     "expected": "{\"category\": \"feature_request\", \"priority\": \"low\"}",
+     "output": "Feature request",
+     "score": 0.0,
+     "reason": "Response is not a JSON object and does not match the expected category and priority",
+     "latency_s": 0.286
+    },
+    {
+     "inputs": {
+      "message": "Someone logged into my account from another country, I didn't do that."
+     },
+     "expected": "{\"category\": \"security\", \"priority\": \"urgent\"}",
+     "output": "**Classification:** Account security \u2013 unauthorized login from a foreign location.",
+     "score": 0.0,
+     "reason": "Response is not a bare JSON object and does not match the required format or content.",
+     "latency_s": 0.396
+    },
+    {
+     "inputs": {
+      "message": "My card expired, where do I update payment details?"
+     },
+     "expected": "{\"category\": \"billing\", \"priority\": \"medium\"}",
+     "output": "card_expired_update_payment_details",
+     "score": 0.0,
+     "reason": "Response is not a JSON object with the required keys and values",
+     "latency_s": 0.662
+    }
+   ],
+   "optimized_samples": [
+    {
+     "inputs": {
+      "message": "I was charged twice for my March invoice, please fix this today!!"
+     },
+     "expected": "{\"category\": \"billing\", \"priority\": \"high\"}",
+     "output": "{\"category\":\"billing\",\"priority\":\"urgent\"}",
+     "score": 0.2,
+     "reason": "Priority is incorrect (urgent vs expected high)",
+     "latency_s": 0.352
+    },
+    {
+     "inputs": {
+      "message": "How do I export my reports to CSV?"
+     },
+     "expected": "{\"category\": \"how_to\", \"priority\": \"low\"}",
+     "output": "{\"category\":\"how_to\",\"priority\":\"low\"}",
+     "score": 1.0,
+     "reason": "Exact match to expected JSON with correct keys and values, no extra text.",
+     "latency_s": 0.609
+    },
+    {
+     "inputs": {
+      "message": "The app crashes every time I open the dashboard on Android 14."
+     },
+     "expected": "{\"category\": \"bug\", \"priority\": \"high\"}",
+     "output": "{\"category\":\"bug\",\"priority\":\"high\"}",
+     "score": 1.0,
+     "reason": "Exact match to expected JSON with correct keys and values, no extra content.",
+     "latency_s": 0.239
+    },
+    {
+     "inputs": {
+      "message": "Can you add dark mode? Would be nice."
+     },
+     "expected": "{\"category\": \"feature_request\", \"priority\": \"low\"}",
+     "output": "{\"category\":\"feature_request\",\"priority\":\"medium\"}",
+     "score": 0.2,
+     "reason": "Priority does not match expected value (medium vs low)",
+     "latency_s": 0.333
+    },
+    {
+     "inputs": {
+      "message": "Someone logged into my account from another country, I didn't do that."
+     },
+     "expected": "{\"category\": \"security\", \"priority\": \"urgent\"}",
+     "output": "{\"category\":\"security\",\"priority\":\"urgent\"}",
+     "score": 1.0,
+     "reason": "Exact match to expected JSON with correct category and priority, no extra text.",
+     "latency_s": 0.483
+    },
+    {
+     "inputs": {
+      "message": "My card expired, where do I update payment details?"
+     },
+     "expected": "{\"category\": \"billing\", \"priority\": \"medium\"}",
+     "output": "{\"category\":\"how_to\",\"priority\":\"medium\"}",
+     "score": 0.0,
+     "reason": "Category is incorrect (how_to instead of billing)",
+     "latency_s": 0.58
+    }
+   ]
+  },
+  {
+   "model": "qwen/qwen3.8-27b",
+   "baseline": 0.0,
+   "optimized": 0.7000000000000001,
+   "baseline_latency_s": 0.4138772487640381,
+   "optimized_latency_s": 0.38248586654663086,
+   "baseline_cost_usd": 0.0,
+   "optimized_cost_usd": 0.0,
+   "baseline_samples": [
+    {
+     "inputs": {
+      "message": "I was charged twice for my March invoice, please fix this today!!"
+     },
+     "expected": "{\"category\": \"billing\", \"priority\": \"high\"}",
+     "output": "**Classification:** Billing Dispute / Duplicate Charge\n\n**Recommended Action:**\nAcknowledge the issue and confirm that the account is being reviewed for a duplicate charge. Do not promise a specific resolution time or guarantee a refund until the investigation is complete.\n\n**Suggested Response:**\n\"Thank you for bringing this to our attention. I have flagged your March invoice for review to check for a duplicate charge. Our billing team will investigate this matter and follow up with you once we have more information.\"",
+     "score": 0.0,
+     "reason": "Response is not a bare JSON object with the required keys, contains extra prose and formatting.",
+     "latency_s": 0.393
+    },
+    {
+     "inputs": {
+      "message": "How do I export my reports to CSV?"
+     },
+     "expected": "{\"category\": \"how_to\", \"priority\": \"low\"}",
+     "output": "**Classification: How-to / Technical Support**\n\n**Reasoning:**\nThe customer is asking for specific instructions on how to perform a task (exporting reports to CSV) within the product. This is a standard technical support or product usage inquiry.\n\n**Compliance Check:**\nThe response to this query should provide step-by-step instructions or a link to relevant documentation. It does not involve refunds or timelines, so the constraint \"Never promise refunds or timelines\" is not triggered by this specific message type, but should be kept in mind if the user follows up with issues regarding the export process.",
+     "score": 0.0,
+     "reason": "Response is not a bare JSON object and includes extra prose, failing the required format.",
+     "latency_s": 0.396
+    },
+    {
+     "inputs": {
+      "message": "The app crashes every time I open the dashboard on Android 14."
+     },
+     "expected": "{\"category\": \"bug\", \"priority\": \"high\"}",
+     "output": "**Classification: Bug Report / Technical Issue**\n\n**Details:**\n*   **Issue Type:** Application Crash\n*   **Component:** Dashboard\n*   **Platform:** Android 14\n*   **Severity:** High (Prevents access to core functionality)\n\n**Recommended Action:**\nLog this as a high-priority bug in your issue tracking system. Assign to the mobile development team for immediate investigation. Do not provide specific fix timelines or refund offers in the response.",
+     "score": 0.0,
+     "reason": "Response is not a bare JSON object and includes extra prose, violating the required format.",
+     "latency_s": 0.465
+    },
+    {
+     "inputs": {
+      "message": "Can you add dark mode? Would be nice."
+     },
+     "expected": "{\"category\": \"feature_request\", \"priority\": \"low\"}",
+     "output": "**Classification: Feature Request**\n\n**Reasoning:**\nThe customer is explicitly asking for a new feature (\"add dark mode\") and expressing a preference for it (\"Would be nice\"). This is not a bug report, a complaint, or a request for support/refund.\n\n**Recommended Response Strategy:**\n*   Acknowledge the request positively.\n*   Confirm that the feedback has been passed to the product team.\n*   **Do not** promise that it will be added, nor provide a timeline for when it might happen.\n*   **Do not** offer refunds (irrelevant here, but per instructions).\n\n**Example Response:**\n\"Thanks for the suggestion! I\u2019ve shared your feedback about dark mode with our product team. We appreciate you letting us know what you\u2019d like to see in the future.\"",
+     "score": 0.0,
+     "reason": "Response includes prose and markdown instead of the required bare JSON with category and priority",
+     "latency_s": 0.504
+    },
+    {
+     "inputs": {
+      "message": "Someone logged into my account from another country, I didn't do that."
+     },
+     "expected": "{\"category\": \"security\", \"priority\": \"urgent\"}",
+     "output": "**Classification: Security / Unauthorized Access**\n\n**Reasoning:**\nThe customer is reporting a potential security breach involving unauthorized login activity from an unfamiliar location. This requires immediate security review, account verification, and potentially a password reset or multi-factor authentication (MFA) enforcement.\n\n**Recommended Action:**\n1.  Acknowledge the concern and prioritize the account's security.\n2.  Guide the user to verify their identity.\n3.  Recommend immediate steps such as changing their password and enabling MFA.\n4.  Review recent login activity with the user to confirm the unauthorized access.\n5.  **Do not** promise refunds or specific resolution timelines, as per your constraints.",
+     "score": 0.0,
+     "reason": "Response includes prose and markdown instead of the required bare JSON with only category and priority",
+     "latency_s": 0.463
+    },
+    {
+     "inputs": {
+      "message": "My card expired, where do I update payment details?"
+     },
+     "expected": "{\"category\": \"billing\", \"priority\": \"medium\"}",
+     "output": "**Category:** Account Management / Billing\n\n**Intent:** Update Payment Method\n\n**Action Required:** Direct the customer to the billing or payment settings section of their account to update their card details.",
+     "score": 0.0,
+     "reason": "Response is not a bare JSON object with the required keys and includes extra prose and formatting.",
+     "latency_s": 0.263
+    }
+   ],
+   "optimized_samples": [
+    {
+     "inputs": {
+      "message": "I was charged twice for my March invoice, please fix this today!!"
+     },
+     "expected": "{\"category\": \"billing\", \"priority\": \"high\"}",
+     "output": "{\"category\":\"billing\",\"priority\":\"urgent\"}",
+     "score": 0.2,
+     "reason": "Category matches but priority is incorrect (expected 'high', got 'urgent'), failing exact match requirement.",
+     "latency_s": 0.758
+    },
+    {
+     "inputs": {
+      "message": "How do I export my reports to CSV?"
+     },
+     "expected": "{\"category\": \"how_to\", \"priority\": \"low\"}",
+     "output": "{\"category\":\"how_to\",\"priority\":\"low\"}",
+     "score": 1.0,
+     "reason": "Exact match to expected JSON with correct keys and values, no extra text.",
+     "latency_s": 0.596
+    },
+    {
+     "inputs": {
+      "message": "The app crashes every time I open the dashboard on Android 14."
+     },
+     "expected": "{\"category\": \"bug\", \"priority\": \"high\"}",
+     "output": "{\"category\":\"bug\",\"priority\":\"high\"}",
+     "score": 1.0,
+     "reason": "Exact match to expected JSON with correct category and priority, no extra content.",
+     "latency_s": 0.236
+    },
+    {
+     "inputs": {
+      "message": "Can you add dark mode? Would be nice."
+     },
+     "expected": "{\"category\": \"feature_request\", \"priority\": \"low\"}",
+     "output": "{\"category\":\"feature_request\",\"priority\":\"low\"}",
+     "score": 1.0,
+     "reason": "Exact match to expected JSON with correct keys and values",
+     "latency_s": 0.202
+    },
+    {
+     "inputs": {
+      "message": "Someone logged into my account from another country, I didn't do that."
+     },
+     "expected": "{\"category\": \"security\", \"priority\": \"urgent\"}",
+     "output": "{\"category\":\"security\",\"priority\":\"urgent\"}",
+     "score": 1.0,
+     "reason": "Exact match to expected JSON with correct category and priority, no extra text.",
+     "latency_s": 0.275
+    },
+    {
+     "inputs": {
+      "message": "My card expired, where do I update payment details?"
+     },
+     "expected": "{\"category\": \"billing\", \"priority\": \"medium\"}",
+     "output": "{\"category\":\"how_to\",\"priority\":\"medium\"}",
+     "score": 0.0,
+     "reason": "Incorrect category; does not match expected billing",
+     "latency_s": 0.229
+    }
+   ]
+  }
+ ]
+}

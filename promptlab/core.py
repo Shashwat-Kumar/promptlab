@@ -70,7 +70,7 @@ class OpenAICompatModel(Model):
     """Any OpenAI-compatible /chat/completions endpoint (Groq, Gemini, OpenRouter, OpenAI, vLLM...)."""
 
     def __init__(self, model: str, api_key: str, base_url: str = PROVIDERS["groq"],
-                 price_in: float = 0.0, price_out: float = 0.0, max_tokens: int = 1024, retries: int = 4):
+                 price_in: float = 0.0, price_out: float = 0.0, max_tokens: int = 4096, retries: int = 4):
         self.name, self.api_key = model, api_key
         self.base_url = PROVIDERS.get(base_url, base_url).rstrip("/")
         self.price_in, self.price_out, self.max_tokens, self.retries = price_in, price_out, max_tokens, retries
