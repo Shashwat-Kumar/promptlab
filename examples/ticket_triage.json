@@ -1,0 +1,22 @@
+{
+  "template": "Classify this customer message.\n\nMessage: {{message}}\n\n<protect>Never promise refunds or timelines.</protect>",
+  "samples": [
+    {"inputs": {"message": "I was charged twice for my March invoice, please fix this today!!"}, "expected": "{\"category\": \"billing\", \"priority\": \"high\"}"},
+    {"inputs": {"message": "How do I export my reports to CSV?"}, "expected": "{\"category\": \"how_to\", \"priority\": \"low\"}"},
+    {"inputs": {"message": "The app crashes every time I open the dashboard on Android 14."}, "expected": "{\"category\": \"bug\", \"priority\": \"high\"}"},
+    {"inputs": {"message": "Can you add dark mode? Would be nice."}, "expected": "{\"category\": \"feature_request\", \"priority\": \"low\"}"},
+    {"inputs": {"message": "Someone logged into my account from another country, I didn't do that."}, "expected": "{\"category\": \"security\", \"priority\": \"urgent\"}"},
+    {"inputs": {"message": "My card expired, where do I update payment details?"}, "expected": "{\"category\": \"billing\", \"priority\": \"medium\"}"}
+  ],
+  "evaluator": {"rubric": "Output must be ONLY a JSON object with keys category (one of billing, how_to, bug, feature_request, security) and priority (one of low, medium, high, urgent), matching EXPECTED. No prose, no markdown fences. Full marks only for exact category and priority with valid bare JSON; deduct heavily for extra text, wrong labels or invented label names."},
+  "target": {"provider": "groq", "model": "llama-3.1-8b-instant", "price_in": 0.05, "price_out": 0.08},
+  "optimizer": {"provider": "groq", "model": "llama-3.3-70b-versatile", "price_in": 0.59, "price_out": 0.79},
+  "judge": {"provider": "groq", "model": "llama-3.3-70b-versatile", "price_in": 0.59, "price_out": 0.79},
+  "compare": [
+    {"provider": "groq", "model": "llama-3.1-8b-instant", "price_in": 0.05, "price_out": 0.08},
+    {"provider": "groq", "model": "llama-3.3-70b-versatile", "price_in": 0.59, "price_out": 0.79},
+    {"provider": "groq", "model": "openai/gpt-oss-20b", "price_in": 0.075, "price_out": 0.30}
+  ],
+  "max_rounds": 4,
+  "patience": 2
+}
