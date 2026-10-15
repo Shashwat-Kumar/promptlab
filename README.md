@@ -47,8 +47,8 @@ from promptlab.core import diff
 import os
 
 key = os.environ["GROQ_API_KEY"]
-target = OpenAICompatModel("llama-3.1-8b-instant", key, "groq")
-smart  = OpenAICompatModel("llama-3.3-70b-versatile", key, "groq")
+target = OpenAICompatModel("openai/gpt-oss-20b", key, "groq")
+smart  = OpenAICompatModel("openai/gpt-oss-120b", key, "groq")
 
 samples = [
     Sample({"message": "I was charged twice!"}, '{"category": "billing", "priority": "high"}'),
