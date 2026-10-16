@@ -4,6 +4,12 @@
 
 Works with any OpenAI-compatible endpoint: Groq, Gemini, OpenRouter, OpenAI, or a local vLLM/Ollama server. Pure Python standard library, no SDK lock-in.
 
+[![GitHub stars](https://img.shields.io/github/stars/Shashwat-Kumar/promptlab?style=social)](https://github.com/Shashwat-Kumar/promptlab) ⭐ **If this is useful, star the repo** so others can find it.
+
+![Real run on Groq: original prompt 0%, rewrite 1 73%, rewrite 2 47%, rewrite 3 60%; the best prompt is kept](docs/promptlab-run.gif)
+
+*A real run (support-ticket triage, 6 test messages, Groq): 0% → 73% after one rewrite; later rewrites scored lower, so the best prompt was kept. Full write-up: [Prompt Lab: letting a model fix my prompt](https://readsigil.com/magazine/workshop-promptlab.html).*
+
 ▶ **Try it in your browser:** [readsigil.com/lab](https://readsigil.com/lab/) (bring your own key; it never leaves your browser except to call your provider).
 
 ```mermaid
